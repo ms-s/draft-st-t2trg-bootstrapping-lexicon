@@ -60,7 +60,7 @@
       
       <t>The problem of bootstrapping is however exacerbated for Internet of Things (IoT) devices that have limited. This problem was first identified by <xref target="Sethi14">Sethi et al.</xref> while developing a bootstrapping solution for smart displays. While this document focuses on bootstrapping terminology for IoT devices, terms used in other context are not excluded.</t>
 
-      <t>Bootstrapping devices typically also involves providing them with some sort of network connectivity. Indeed, the functionality of a disconnected device is rather limited. Ipso facto, bootstrapping assumes that some network has been setup a-priori. While setting up a network itself is challenging. For example, the Wi-Fi Alliance Simple Configuration specification <xref target="simpleconn"/> helps users setup home networks. This document is only focused on terminology associated with bootstrapping devices and excludes any discussion on setting up networks.</t>
+      <t>Bootstrapping devices typically also involves providing them with some sort of network connectivity. Indeed, the functionality of a disconnected device is rather limited. Ipso facto, bootstrapping assumes that some network has been setup a-priori. Setting up a network itself is challenging. For example, the Wi-Fi Alliance Simple Configuration specification <xref target="simpleconn"/> helps users setup home networks. This document is only focused on terminology associated with bootstrapping devices and excludes any discussion on setting up networks.</t>
 
       <t>In addition to our informal definition, it is helpful to look at other definitions of bootstrapping. The IoT@Work project defines bootstrapping in the context of IoT as "the process by which the state of a device, a subsystem, a network, or an application changes from not operational to operational" <xref target="iotwork"/>. Vermillard <xref target="vermillard"/>, on the other hand, describes bootstrapping as the procedure by which an IoT device gets the URLs and secret keys for reaching the necessary servers. Vermillard notes that the same process is useful for re-keying, upgrading the security schemes, and for redirecting the IoT devices to new servers.</t>
 
@@ -118,14 +118,15 @@
       <section title="Open Connectivity Foundation">
         <t>The Open Connectivitiy Foundation <xref target="ocf"/> defines the process before a device is operational as onboarding. The first step of this onboarding process is "configuring" the ownership, i.e., establishing a legitimate user that owns the device. For this, the user is supposed to use an Onboarding tool (OBT) and an Owner Transfer Methods (OTM).</t>
 
-        <t>The Onboarding tool (OBT) is described as a logical entity that may be implemented on a single or multiple entities such as a home gateway, a device management tool, etc. OCF lists several optional Owner Transfer Methods (OTMs). For example, . At the end of the execution of an OTM, the Onboarding tool must have "provisioned" an Owner Credential onto the device. The following owner transfer methods are specified:
+        <t>The Onboarding tool (OBT) is described as a logical entity that may be implemented on a single or multiple entities such as a home gateway, a device management tool, etc. OCF lists several optional Owner Transfer Methods (OTMs). At the end of the execution of an OTM, the Onboarding tool must have "provisioned" an Owner Credential onto the device. The following owner transfer methods are specified:
         <list style="symbols">
-        	<t>Just works:</t>
-        	<t>Random PIN:</t>
-        	<t>Manufacturer certificate:</t>
-        	<t>Vendor specific:</t>
+        	<t>Just works: Performs an un-authenticated Diffie-Hellman key exchange over DTLS. The key exchange results in a symmetric session key which is later used for provisioning. Naturally, this mode is vulnerable to Man-in-The-Middle (MiTM) attackers.</t>
+        	<t>Random PIN: The device generates a PIN code that is entered into the onboarding tool by the user. This pin code is used together with TLS-PSK ciphersuites for establishing a symmetric session key. OCF recommends PIN codes to have an entropy of 40 bits.</t>
+        	<t>Manufacturer certificate: An onboarding tool authenticates the device by verifying a manufacturer installed certificate. Similarly, the device may authenticate the onboarding tool by verifying its signature. Fo</t>
+        	<t>Vendor specific: Vendors implement their own transfer method that accommodates any specific device constraints.</t>
         </list> 
-         Once the ownership is established, the onboarding tool is used for "provisioning"/"configuring" the device before it finally becomes operational. </t>
+           Once the onboarding tool and the new device have authenticated and established secure communication, the onboarding tool "provisions"/"configures" the device with Owner credentials. Owner credentials may consist of certificates, shared keys, or Kerberos tickets for example.</t>
+           <t>The OBT will </t>
       </section>
 
       <section title="Internet Engineering Task Force">
