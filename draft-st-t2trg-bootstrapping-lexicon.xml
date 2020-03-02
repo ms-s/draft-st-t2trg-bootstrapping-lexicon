@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<!DOCTYPE rfc [  
+<!ENTITY RFC2119 SYSTEM "reference.RFC.2119.xml"> 
+<!ENTITY RFC7030 SYSTEM "reference.RFC.7030.xml"> 
+<!ENTITY RFC8572 SYSTEM "reference.RFC.8572.xml"> 
+<!ENTITY RFC8572 SYSTEM "reference.I-D.ietf-anima-bootstrapping-keyinfra.xml"> 
+<!ENTITY newline "&#10;">
+]>
+
+<?xml-stylesheet type="text/xsl" href="rfc2629.xslt"?>
+
+<?rfc strict="yes"?>
+<?rfc toc="yes"?>
+<?rfc tocdepth="4"?>
+<?rfc symrefs="yes"?>   
+<?rfc sortrefs="yes"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<?rfc rfcedstyle="yes"?>
+
+<rfc category="info" docName="draft-st-t2trg-bootstrapping-lexicon-00" ipr="trust200902">
+
+  <front>
+
+    <title  abbrev="Bootstrapping Lexicon">The bootstrapping lexicon</title>
+
+    <author initials="M" surname="Sethi" fullname="Mohit Sethi">
+      <organization>Ericsson</organization>
+      <address>
+        <postal>
+          <street>Hirsalantie 11</street>          
+          <city>Jorvas</city>
+          <code>02420</code>
+          <country>Finland</country>
+        </postal>
+        <email>mohit@piuha.net</email>
+      </address>
+    </author>
+
+    
+    <date />
+    <area>Security</area>
+    <workgroup>Network Working Group</workgroup>
+
+    <abstract>
+      <t>
+        This draft provides an overview of the various terms that are used when discussing bootstrapping of devices. We document terms that have been used within the IETF as well as other standards bodies. We investigate if the terms refer to the same phenomena or have subtle differences. Lastly, we provide recommendations on the applicability of terms in different contexts. 
+      </t>
+    </abstract>
+
+  </front>
+
+  <middle>
+
+    <!-- **************************************************************** -->
+
+    <section title="Introduction" anchor="introduction">
+      <t>We informally define bootstrapping as "any process that takes place before a device can become operational". While bootstrapping is necessary for all computing devices, until recently, most of our devices typically had sufficient computing power and user interface (UI) for ensuring somewhat smooth operation. For example, a typical laptop device required the user to setup a username/password as well as enter network settings for Internet connectivity. Following these steps ensure that the laptop was fully operational.</t>
+      
+      <t>The problem of bootstrapping is however exacerbated for Internet of Things (IoT) devices that have limited. This problem was first identified by <xref target="Sethi14">Sethi et al.</xref> while developing a bootstrapping solution for smart displays. While this document focuses on bootstrapping terminology for IoT devices, terms used in other context are not excluded.</t>
+
+      <t>Bootstrapping devices typically also involves providing them with some sort of network connectivity. Indeed, the functionality of a disconnected device is rather limited. Ipso facto, bootstrapping assumes that some network has been setup a-priori. While setting up a network itself is challenging. For example, the Wi-Fi Alliance Simple Configuration specification <xref target="simpleconn"/> helps users setup home networks. This document is only focused on terminology associated with bootstrapping devices and excludes any discussion on setting up networks.</t>
+
+      <t>In addition to our informal definition, it is helpful to look at other definitions of bootstrapping. The IoT@Work project defines bootstrapping in the context of IoT as "the process by which the state of a device, a subsystem, a network, or an application changes from not operational to operational" <xref target="iotwork"/>. Vermillard <xref target="vermillard"/>, on the other hand, describes bootstrapping as the procedure by which an IoT device gets the URLs and secret keys for reaching the necessary servers. Vermillard notes that the same process is useful for re-keying, upgrading the security schemes, and for redirecting the IoT devices to new servers.</t>
+
+      <t>
+        There are several terms that have often been used in the context of bootstrapping:
+        <list style="symbols">
+          <t>Bootstrapping</t>
+          <t>Provisioning</t>
+          <t>Onboarding</t>
+          <t>Enrollment</t>
+          <t>Commissioning</t>
+          <t>Initialization</t>
+          <t>Configuration</t>
+          <t>Registration</t>
+        </list>         
+      </t>
+      
+      <t>We attempt to find out whether all these terms refer to the same phenomena. We begin by looking at how these terms have been used in various standards and standardization bodies in <xref target="usage"/>. We then summarize our understanding in <xref target="comp"/>, and finally provide our recommendations on their usage in <xref target="recommend"/></t>
+
+
+      
+    </section>
+
+
+    <section title="Terminology" anchor="terminology">
+      <t> 
+        The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <xref target="RFC2119"/>. 
+      </t>
+    </section>
+
+
+    <!-- **************************************************************** -->
+
+
+    <section title="Usage of terms" anchor="usage">
+      <section title="Device Provisioning Protocol">
+        <t>Device provisioning protocol (DPP) <xref target="dpp"/> describes itself as a standardized protocol for providing user friendly Wi-Fi setup while maintaining or increasing the security. DPP relies on a configurator, e.g. a smartphone application, for setting up all all other devices, called enrollees, in the network. DPP has the following three phases/sub-protocols:
+        <list style="symbols">
+          <t>Bootstrapping: The configurator obtains bootstrapping information from the enrollee using an out-of-band channel such as scanning a QR code or tapping NFC. The bootstrapping information includes the public-key of the device and metadata such as the radio channel on which the device is listening.</t>
+          <t>Authentication: In DPP, either the configurator or the enrollee can initiate the authentication protocol. The side initiating the authentication protocol is called as the initiator while the other side is called the responder. The authentication sub-protocol provides authentication of the responder to an initiator. It can optionally authenticate the initiator to the responder (only if the bootstrapping information was exchange out-of-band in both directions).</t>
+          <t>Configuration: Using the key established from the authentication protocol, the enrollee asks the configurator for network information such as the SSID and passphrase of the access point.</t>
+        </list>
+        </t>
+      </section>
+      <section title="Open Mobile Alliance (OMA) Lightweight M2M (LwM2M)">
+        <t>The OMA LWM2M specification <xref target="oma"/> defines an architecture where a new device (LWM2M client) contacts a Bootstrap-server which is responsible for "provisioning" essential information such as credentials. After receiving this essential information, the LwM2M client device "registers" itself with one or more LwM2M Servers which will manage the device during its lifecycle. The current standard defines the following four bootstrapping modes:
+            <list style="symbols">
+              <t>Factory Bootstrap: An IoT device in this case is configured with all the necessary bootstrap information during manufacturing and prior to its deployment.</t>
+              <t>Bootstrap from Smartcard: An IoT device retrieves and processes all the necessary bootstrap data from a Smartcard.</t>
+              <t>Client Initiated Bootstrap: This mode provides a mechanism for an IoT client device to retrieve the bootstrap information from a Bootstrap Server. This requires the client device to have an account at the Bootstrap Server and credentials to obtain the necessary information securely.</t>
+              <t>Server Initiated Bootstrap: In this bootstrapping mode, the bootstrapping server configures all the bootstrap information on the IoT device without receiving a request from the client. This means that the bootstrap server needs to know if a client IoT Device is ready for bootstrapping before it can be configured. For example, a network may inform the bootstrap server of a new connecting IoT client device.</t>
+            </list>
+          </t>
+      </section>
+      <section title="Open Connectivity Foundation">
+        <t>The Open Connectivitiy Foundation <xref target="ocf"/> defines the process before a device is operational as onboarding. The first step of this onboarding process is "configuring" the ownership, i.e., establishing a legitimate user that owns the device. For this, the user is supposed to use an Onboarding tool (OBT) and an Owner Transfer Methods (OTM).</t>
+
+        <t>The Onboarding tool (OBT) is described as a logical entity that may be implemented on a single or multiple entities such as a home gateway, a device management tool, etc. OCF lists several optional Owner Transfer Methods (OTMs). For example, . At the end of the execution of an OTM, the Onboarding tool must have "provisioned" an Owner Credential onto the device. The following owner transfer methods are specified:
+        <list style="symbols">
+        	<t>Just works:</t>
+        	<t>Random PIN:</t>
+        	<t>Manufacturer certificate:</t>
+        	<t>Vendor specific:</t>
+        </list> 
+         Once the ownership is established, the onboarding tool is used for "provisioning"/"configuring" the device before it finally becomes operational. </t>
+      </section>
+
+      <section title="Internet Engineering Task Force">
+        <section title="Enrollment over Secure Transport (EST)">
+        	<t><xref target="RFC7030"/></t>
+        </section>
+    	<section title="Bootstrapping Remote Secure Key Infrastructures (BRSKI)">
+    		<t><xref target="I-D.ietf-anima-bootstrapping-keyinfra"/></t>
+    	</section>
+    	<section title="Secure Zero Touch Provisioning">
+    		<t><xref target="RFC8572"/></t>
+    	</section>
+      </section>
+
+    </section>
+
+    <section title="Comparsion" anchor="comp">
+    	<t>There are several stages before a device becomes fully operational. This typically involves establishing some initial trust after which credentials and other parameter.</t>
+    </section>
+
+    <section title="Recommendations" anchor="recommend">
+    	<t>TBD</t>
+    </section>
+
+
+
+    <!-- **************************************************************** -->
+  </middle>
+
+  <back>
+
+    <!-- **************************************************************** -->
+
+    <references title="Normative references">
+      <?rfc include='reference.RFC.2119'?> <!-- Terminology -->
+    </references>
+
+    <references title="Informative references">
+      <?rfc include='reference.RFC.7030'?>
+      <?rfc include='reference.I-D.ietf-anima-bootstrapping-keyinfra'?>
+      <?rfc include='reference.RFC.8572'?>
+      <reference anchor="Sethi14" target="http://dx.doi.org/10.1145/2632048.2632049">
+        <front>
+          <title>Secure Bootstrapping of Cloud-Managed Ubiquitous Displays</title>
+          <author initials="M." surname="Sethi" fullname="Mohit Sethi">
+            <organization>Ericsson</organization>
+          </author>
+          <author initials="E." surname="Oat" fullname="Elena Oat">
+            <organization>Aalto University</organization>
+          </author>
+          <author initials="M." surname="Di Francesco" fullname="Mario Di Francesco">
+            <organization>Aalto University</organization>
+          </author>
+          <author initials="T." surname="Aura" fullname="Tuomas Aura">
+            <organization>Aalto University</organization>
+          </author>
+          <date month="September" year="2014" />
+        </front>
+        <seriesInfo name="Proceedings of ACM International Joint Conference on Pervasive and Ubiquitous Computing (UbiComp 2014), pp. 739-750, Seattle, USA" value="" />
+      </reference>
+
+      <reference anchor="dpp" target="https://www.wi-fi.org/download.php?file=/sites/default/files/private/Device_Provisioning_Protocol_Specification_v1.1_1.pdf">
+        <front>
+          <title>Wi-Fi Device Provisioning Protocol (DPP)</title>
+          <author fullname="" surname="Specifictaion version 1.1">
+            <organization>Wi-Fi Alliance</organization>
+          </author>
+          <date month="" year="2018"/>
+        </front>
+        <seriesInfo name="Wi-Fi Alliance" value=""/>
+      </reference>
+
+      <reference anchor="oma" target="http://www.openmobilealliance.org/release/LightweightM2M/V1_1_1-20190617-A/OMA-TS-LightweightM2M_Core-V1_1_1-20190617-A.pdf">
+        <front>
+          <title>Lightweight Machine to Machine Technical Specification: Core</title>
+          <author fullname="" surname="Approved Version: 1.1.1 - 2019 06 17">
+            <organization>Open Mobile Alliance</organization>
+          </author>
+          <date month="" year="2019"/>
+        </front>
+        <seriesInfo name="Open Mobile Alliance" value=""/>
+      </reference>      
+
+
+      <reference anchor="ocf" target="https://openconnectivity.org/specs/OCF_Security_Specification_v1.0.0.pdf">
+        <front>
+          <title>OCF Security Specification</title>
+          <author fullname="" surname="Version: 1.0.0">
+            <organization>Open Mobile Alliance</organization>
+          </author>
+          <date month="June" year="2017"/>
+        </front>
+        <seriesInfo name="Open Connectivitiy Foundation" value=""/>
+      </reference>     
+
+      <reference anchor="simpleconn" target="https://www.wi-fi.org/download.php?file=/sites/default/files/private/Wi-Fi_Simple_Configuration_Technical_Specification_v2.0.7.pdf">
+        <front>
+          <title>Wi-Fi Simple Configuration</title>
+          <author fullname="" surname="Specifictaion Version 2.0.7">
+            <organization>Wi-Fi Alliance</organization>
+          </author>
+          <date month="" year="2019"/>
+        </front>
+        <seriesInfo name="Wi-Fi Alliance" value=""/>
+      </reference>
+
+      <reference anchor="vermillard">
+        <front>
+          <title>Bootstrapping device security with lightweight M2M</title>
+          <author initials="J." surname="Vermillard">
+          </author>
+          <date year="2015" month="February" />
+        </front>
+        <seriesInfo name="Appeared on blog at medium.com" value=""/>
+      </reference>
+      
+      <reference anchor="iotwork">
+        <front>
+          <title>IoT@Work bootstrapping architecture. Deliverable D2.2</title>
+          <author>
+          </author>
+          <date year="2011" month="June"/>
+        </front>
+        <seriesInfo name="European Commission FP7 project IoT@Work" value=""/>
+      </reference>
+
+
+    </references>
+
+    <!-- **************************************************************** -->
+
+
+
+
+
+
+  </back>
+
+</rfc>
