@@ -1,2 +1,1 @@
-# draft-st-t2trg-bootstrapping-lexicon
-Draft discussing bootstrapping related terminology
+Draft discussing bootstrapping related terminology and methods
