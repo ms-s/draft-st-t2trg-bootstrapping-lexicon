@@ -40,7 +40,7 @@
       </address>
     </author>
     <author fullname="Dan Garcia-Carrillo" initials="D.G." surname="Garcia-Carrillo">
-      <organization>Odin Solutions, S.L</organization>
+      <organization>Odin Solutions</organization>
       <address>
         <postal>
           <street/>
@@ -167,25 +167,21 @@
         <t>Generic Bootstrapping Architecture (GBA) is another bootstrapping method that falls in centralized category. GBA is part of the 3GPP standard <xref target="TS33220"/> and is based on 3GPP Authentication and Key Agreement (3GPP AKA).  GBA is an application independent mechanism to provide a client application (running on the User equipment (UE)) and any application server with a shared session secret. This shared session secret can subsequently be used to authenticate and protect the communication between the client application and the application server. GBA authentication is based on the permanent secret shared between the UE's Universal Integrated Circuit Card (UICC), for example SIM card, and the corresponding profile information stored within the cellular network operator's Home Subscriber System (HSS) database. <xref target="I-D.sethi-gba-constrained"/> describes a resource-constrained adaptation of GBA to IoT applications.</t>
         <t>The four bootstrapping modes specified by the Open Mobile Alliance (OMA) Light-weight M2M (LwM2M) standard require some sort of pre-provisioned credentials on the device. All the four modes are examples of managed bootstrapping methods.</t>
         <t>The Kerberos protocol <xref target="RFC4120"/> is a network authentication protocol that allows several endpoints to communicate over an insecure network. Kerberos relies on a symmetric cryptography scheme and requires a trusted third party, that guarantees the identities of the various actors. It relies on the use of &quot;tickets&quot; for nodes to prove identity to one another in a secure manner. There has been research work on using Kerberos for IoT devices <xref target="kerberosiot"/>.</t>
-        <t>Before closing the discussion on managed methods, it is also important to mention some of the work done on implicit certificates and identity-based cryptographic schemes <xref target="himmo"/>, <xref target="implicit"/>. While these are interesting and novel schemes that can be a part of securely bootstrapping devices, at this point, it is hard to speculate on whether such schemes would see large-scale deployment in the future.</t>
-      </section>
-      <section anchor="voucher" title="Hybrid Methods">
-        <t>BRSKI</t>
-        <t><xref target="RFC8572"/>.</t>
-      </section>
-      <section anchor="lpwan" title="Bootstrapping in LPWAN">
-        <t>Low Power Wide Area Network (LPWAN)  encompasses a wide variety of technologies, generally, with  severe constraints in the link in comparison with other typical IoT technologies such as Bluetooth or IEEE 802.15.4. LPWAN typically presents a star topology with support for thousands of devices per  antenna.</t>
-        <t>Among the wide variety of technologies considered as part of LPWAN, we highlight the ones mentioned in the LPWAN overview document of the LPWAN working group <xref target="RFC8376"/>: LoRaWAN, Narrowband IoT (NB-IoT), SIGFOX and Wi-SUN Alliance Field Area Network (FAN). Each technology has different methods to provide security for the communications. Bootstrapping is not directly tackled by all of them, having in some cases proprietary solutions that are not publicly accessible and in other cases key distribution is not even considered. Among the previous LPWAN technologies, bootstrapping is considered in  Wi-SUN Alliance Field Area Network (FAN) and LoRaWAN provides Joining process to derive key material based on some previous key material installed in the device.</t>
-        <t>Following the definition in <xref target="classification"/> we find that they all fall into the managed classification. This is because in one way or another, a previous trust relationship has been established and authentication credentials have been installed in the devices. </t>
-        <t>
+        <t>It is also important to mention some of the work done on implicit certificates and identity-based cryptographic schemes <xref target="himmo"/>, <xref target="implicit"/>. While these are interesting and novel schemes that can be a part of securely bootstrapping devices, at this point, it is hard to speculate on whether such schemes would see large-scale deployment in the future.</t>
+        <section anchor="lpwan" title="Bootstrapping in LPWAN">
+          <t>Low Power Wide Area Network (LPWAN) encompasses a wide variety of technologies, generally, with  severe constraints in the link in comparison with other typical IoT technologies such as Bluetooth or IEEE 802.15.4. LPWAN typically presents a star topology with support for thousands of devices per  antenna.</t>
+          <t>Among the wide variety of technologies considered as part of LPWAN, we highlight the ones mentioned in the LPWAN overview document of the LPWAN working group <xref target="RFC8376"/>: LoRaWAN, Narrowband IoT (NB-IoT), SIGFOX and Wi-SUN Alliance Field Area Network (FAN). Each technology has different methods to provide security for the communications. Bootstrapping is not directly tackled by all of them, having in some cases proprietary solutions that are not publicly accessible and in other cases key distribution is not even considered. Among the previous LPWAN technologies, bootstrapping is considered in  Wi-SUN Alliance Field Area Network (FAN) and LoRaWAN provides Joining process to derive key material based on some previous key material installed in the device.</t>
+          <t>Following the definition in <xref target="classification"/> we find that they all fall into the managed classification. This is because in one way or another, a previous trust relationship has been established and authentication credentials have been installed in the devices. </t>
+          <t>
           <list style="symbols">
             <t>LoRaWAN <xref target="LoRaWAN"/> describes its own protocol to authenticate their nodes and incorporate them into their network. This process is called the Joining Procedure and it is based on pre-shared keys. The Joining procedure entails one exchange where the node that intends to join the network sends its identity along with other information to authenticate against a network server which interacts with an entity that  knows the pre-shared key (called AppKey) and derives the necessary key material for its nominal operation. There is some variation regarding the pre-installed key material on version 1.0 and 1.1, but the Joining Process is very similar in both cases. The Joining Process consists of an exchange of two messages, the Join-request message (sent from the node) where information about the identity of the node is provided and the Join-accept message (received by  the node). In this last message the node receives the necessary information to derive the key material to secure the communications To this process there are adaptations to use AAA infrastructures to enhance the joining process with AAA features such as identity federation. Since there are pre-established trust relationships and authentication credentials, LoRaWAN falls into the managed category.</t>
             <t>Wi-SUN Alliance Field Area Network (FAN) uses an EAP lower layer (IEEE 802.1X) and the EAP-TLS method for network access authentication and performs the 4-way handshake to establish a security association similarly to a WPA2-Enterprise deployment. Since it uses on the authentication protocols which are used to exemplify the managed methods (EAP-TLS), WI-SUN falls in the managed category as well.</t>
             <t>NB-IoT also falls into the category of managed methods, since they present a pre-established trust relationship. For instance, they have support for EAP-AKA.</t>
             <t>Sigfox provides security to the communications using a unique device ID and an cryptographic keys that are independent for each device. As stated in <xref target="RFC8376"/> algorithms and keying details for are not published, but what we can see is that the establishment of the keys are subject to a pre-established trust relationship with the Sigfox network, hence having also a managed method.</t>
           </list>
-        </t>
-        <t>In short, LPWANs are still under development, and as it is identified in <xref target="RFC8376"/>, due to the characteristics of these technologies, they are prime candidates to benefit from a standardized Authentication, Accounting, and Authorization (AAA) infrastructure <xref target="RFC2904"/> as a way of offering a scalable solution for some of the security and management issues that are present in LPWANs.</t>
+          </t>
+          <t>In short, LPWANs are still under development, and as it is identified in <xref target="RFC8376"/>, due to the characteristics of these technologies, they are prime candidates to benefit from a standardized Authentication, Accounting, and Authorization (AAA) infrastructure <xref target="RFC2904"/> as a way of offering a scalable solution for some of the security and management issues that are present in LPWANs.</t>
+        </section>
       </section>
       <section anchor="p2p" title="Peer to Peer or Adhoc Methods">
         <t>While managed methods are viable for many IoT devices, they may not be suitable or desirable in all scenarios. All the managed methods assume that some credentials are provisioned into the device. These credentials may be in the device micro-controller or in a replaceable smart card such as a SIM card. The methods also sometimes assume that the manufacturer embeds these credentials during the device manufacture on the factory floor. However, in many cases the manufacturer may not have sufficient incentive to do this. In other scenarios, it may be hard to completely trust and rely on the device manufacturer to securely perform this task. Therefore, many times, P2P or Adhoc methods of bootstrapping are used. We discuss a few example next.</t>
@@ -196,7 +192,7 @@
         <t>Thread Group commissioning <xref target="threadcommissioning"/> introduces a two phased process i.e. Petitioning and Joining. Entities involved are Leader, Joiner, Commissioner, Joiner Router and Border Router. Leader is the first device in Thread Network that must be commissioned using out-of-band process and is used to inject correct user generated Commissioning Credentials (can be changed later) into Thread Network. Joiner is the node that intends to get authenticated and authorized on Thread Network. Commissioner is either within the Thread Network (Native) or connected with Thread Network via a WLAN (External).</t>
         <t>Under some topologies, Joiner Router and Border Router facilitate the Joiner node to reach Native and External Commissioner, respectively. Petitioning begins before Joining process and is used to grant sole commissioning authority to a Commissioner. After an authorized Commissioner is designated, eligible thread devices can join network. Pair-wise key is shared between Commissioner and Joiner, network parameters (Network Name, Security Policy, Steering Data, Commissioning Data Timestamp, Commissioning Credential, Network Master Key, Network Key Sequence, Network Mesh-Local ULA, Border Router Locator, Commissioner Session ID, XPANID, PANID and Channel) are sent out securely (using pair-wise key) by Joiner Router to Joiner for letting Joiner to join the Thread Network. Entities involved in Joining process depends on system topology i.e. location of Commissioner and Joiner. </t>
         <t>Thread networks only operates using IPv6. Thread devices can devise GUAs (Global Unicast Addresses) <xref target="RFC4291"/>. Provision also exist via Border Router, for Thread device to acquire individual global address by means of DHCPv6 or using SLAAC (Stateless Address Autoconfiguration) address derived with advertised network prefix.</t>
-        <t>DPP (Device Provisioning Protocol) <xref target="dpptech"/> is a 3 message authentication protocol currently being standardized by the WiFi Alliance for devices that rely on IEEE 802.11 link-layer for communication. The DPP specification allows devices to join a network without a password using various mechanisms such as QR codes or NFC tags. With DPP, devices can perform mutual authentication without a password. Authentication Request, Response and Confirm are 3 messages types based on <xref target="IEEE802.11"/> format. It provides authentication and key establishment between an initiator and a responder. Out of band mechanisms i.e. QR code, USB, NFC, Bluetooth or proof of shared code/phrase/word is used to acquire bootstrapping key <xref target="dpptech"/>. Afterwards, authentication and configuration exchange takes place. Bootstrap trust in public key can be only for responder's public key or for both parties in mutual authentication manner. The role of initiator and responder as either enrollee or configurator is decided during initial exchange of DPP Authentication frames. Configurator's protocol key is always a one-time-used (ephemeral) key but enrollee's protocol key always becomes its network access provisioning key.</t>
+        <t>DPP bootstrapping explained earlier is an example of ad-hoc bootstrapping method.</t>
       </section>
       <section anchor="leap" title="Leap-of-faith/Opportunistic Methods">
         <t>Next, we look at a leap-of-faith/opportunistic bootstrapping method for IoT devices.</t>
@@ -243,7 +239,7 @@
       <?rfc include='reference.RFC.8366'?>
       <?rfc include='reference.RFC.8376'?>
       <?rfc include='reference.RFC.8572'?>
-      
+
       <reference anchor="simpleconn" target="https://www.wi-fi.org/download.php?file=/sites/default/files/private/Wi-Fi_Simple_Configuration_Technical_Specification_v2.0.7.pdf">
         <front>
           <title>Wi-Fi Simple Configuration</title>
@@ -515,16 +511,6 @@
         <seriesInfo name="Submitted to NIST Workshop on Cybersecurity in a Post-Quantum World" value=""/>
         <seriesInfo name="version" value="20141225:065757"/>
       </reference>
-      <reference anchor="dpptech" target="https://www.wi-fi.org/download.php?file=/sites/default/files/private/Device_Provisioning_Protocol_Specification_v1.1_1.pdf">
-        <front>
-          <title>Device Provisioning Protocol Specification Version 1.1</title>
-          <author fullname="" surname="Technical Specification">
-            <organization>Wi-Fi Alliance</organization>
-          </author>
-          <date month="December" year="2018"/>
-        </front>
-        <seriesInfo name="Wi-Fi Alliance" value=""/>
-      </reference>
       <reference anchor="oma" target="http://www.openmobilealliance.org/release/LightweightM2M/V1_1_1-20190617-A/OMA-TS-LightweightM2M_Core-V1_1_1-20190617-A.pdf">
         <front>
           <title>Lightweight Machine to Machine Technical Specification: Core</title>
@@ -545,15 +531,7 @@
         </front>
         <seriesInfo name="Open Connectivitiy Foundation" value=""/>
       </reference>
-      <reference anchor="IEEE802.11" target="https://standards.ieee.org/findstds/standard/802.11-2016.html">
-        <front>
-          <title>IEEE Std. 802.11-2016</title>
-          <author fullname="" surname="IEEE Standard">
-            <organization/>
-          </author>
-          <date month="December" year="2016"/>
-        </front>
-      </reference>
+  
       <reference anchor="threadcommissioning">
         <front>
           <title>Thread Commissioning</title>
