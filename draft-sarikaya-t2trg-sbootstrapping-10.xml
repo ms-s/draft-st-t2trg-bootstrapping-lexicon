@@ -120,7 +120,7 @@
         <t>Bluetooth mesh provisioning. Beacons for discovery. Public-key exchange followed by authentication. Finally provisioning of the network key and unicast address. To be expanded.</t>
       </section>
       <section title="Fast IDentity Online (FIDO) alliance">
-        <t>The Fast IDentity Online Alliance (FIDO) is currently specifying an automatic onboarding protocol for IoT devices <xref target="fidospec"/>. The goal of this protocol is to provide a new IoT device with information for interacting securely with an online IoT platforim. This protocol allows owners to choose the IoT platform for their devices at a late stage in the device lifecyle. The draft specification refers to this feature as "late binding".</t>
+        <t>The Fast IDentity Online Alliance (FIDO) is currently specifying an automatic onboarding protocol for IoT devices <xref target="fidospec"/>. The goal of this protocol is to provide a new IoT device with information for interacting securely with an online IoT platform. This protocol allows owners to choose the IoT platform for their devices at a late stage in the device lifecyle. The draft specification refers to this feature as "late binding".</t>
 
         <t>The FIDO IoT protocol itself is composed of one Device Initialization (DI) protocol and 3 Transfer of Ownership (TO) protocols TO0, TO1, TO2. Protocol messages are encoded in Concise Binary Object Representation (CBOR) <xref target="RFC8949"/> and can be transported over application layer protocols such as Constrained Application Protocol (CoAP) <xref target="RFC7252"/> or directly over TCP, Bluetooth etc. FIDO IoT however assumes that the device already has IP connectivity to a rendezvous server. Establishing this initial IP connectivity is explicitly stated as "out-of-scope" but the draft specification hints at the usage of Hypertext Transfer Protocol (HTTP) <xref target="RFC7230"/> proxies for IP networks and other forms of tunneling for non-IP networks.</t>
         <t>The specification only provides a non-normative example of the DI protocol which must be executed in the factory during device manufacture. This protocol embeds initial ownership and manufacturing credentials into Restricted Operation Environment (ROE) on the device. The initial information embedded also includes a unique device identifier (called as GUID in the specification). After DI is executed, the manufacturer has an ownership voucher which passed along the supply chain to the device owner.</t>
@@ -235,7 +235,7 @@
       <t>There are no IANA considerations for this document.</t>
     </section>
     <section title="Acknowledgements">
-      <t>We would like to thank Tuomas Aura, Hannes Tschofenig, and Michael Richardson for providing extensive feedback as well as Rafa Marin for his support.</t>
+      <t>We would like to thank Tuomas Aura, Hannes Tschofenig, and Michael Richardson for providing extensive feedback as well as Rafa Marin-Lopez for his support.</t>
     </section>
   </middle>
   <back>
