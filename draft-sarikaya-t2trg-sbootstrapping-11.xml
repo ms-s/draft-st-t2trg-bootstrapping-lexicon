@@ -426,7 +426,6 @@
       </reference>
       <?rfc include='reference.I-D.ietf-anima-bootstrapping-keyinfra'?>
       <?rfc include='reference.I-D.marin-ace-wg-coap-eap'?>
-      <?rfc include='reference.I-D.ietf-ace-oauth-authz'?>
       <?rfc include='reference.I-D.oflynn-core-bootstrapping'?>
       <?rfc include='reference.I-D.ietf-emu-eap-noob'?>
       <?rfc include='reference.I-D.sethi-gba-constrained'?>
